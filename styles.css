@@ -1,25 +1,33 @@
 :root {
-  --bg: #FBF3F1;
+  --bg: #FBF6EE;
   --surface: #FFFFFF;
-  --surface-soft: #FCF6F4;
-  --ink: #2B1D22;
-  --ink-soft: #7A6169;
-  --ink-faint: #B29AA0;
-  --accent: #B84A6A;
-  --accent-deep: #7A2E45;
-  --accent-tint: #F6E3E8;
-  --line: #EBD9DB;
-  --shadow: 0 10px 30px rgba(122, 46, 69, 0.10);
-  --shadow-sm: 0 2px 8px rgba(122, 46, 69, 0.08);
+  --surface-soft: #F6EEDD;
+  --ink: #2B1710;
+  --ink-soft: #7A6A57;
+  --ink-faint: #B8A688;
+  --accent: #7A1F2F;
+  --accent-deep: #4A0D18;
+  --accent-tint: #F3E1E1;
+  --gold: #B5872A;
+  --gold-deep: #8A6420;
+  --gold-tint: #F7EED2;
+  --on-accent: #FFFFFF;
+  --line: #EADFC9;
+  --shadow: 0 10px 30px rgba(74, 13, 24, 0.10);
+  --shadow-sm: 0 2px 8px rgba(74, 13, 24, 0.08);
 
-  --cat-manikir: #B84A6A;
-  --cat-manikir-tint: #F6E3E8;
-  --cat-pedikir: #4E8B77;
-  --cat-pedikir-tint: #E3EFE9;
-  --cat-oba: #B8813A;
-  --cat-oba-tint: #F5EADA;
-  --cat-ostalo: #7A6C8A;
-  --cat-ostalo-tint: #EAE5F0;
+  --cat-izlivanje: #7A1F2F;
+  --cat-izlivanje-tint: #F3E1E1;
+  --cat-korekcija: #A6483B;
+  --cat-korekcija-tint: #F5E4DE;
+  --cat-gel: #B5872A;
+  --cat-gel-tint: #F7EED2;
+  --cat-trajni: #8A6420;
+  --cat-trajni-tint: #F1E6CE;
+  --cat-skidanje: #7A6A57;
+  --cat-skidanje-tint: #EFE9DD;
+  --warn: #8A6420;
+  --warn-tint: #F1E6CE;
 
   --font-display: ui-serif, Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
   --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
@@ -33,52 +41,66 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1C1317;
-    --surface: #271A1F;
-    --surface-soft: #2E1F25;
-    --ink: #F5E8EA;
-    --ink-soft: #C7ADB4;
-    --ink-faint: #8A6E75;
-    --accent: #E38AA6;
-    --accent-deep: #F3B9C9;
-    --accent-tint: #3A2530;
-    --line: #3D2A31;
+    --bg: #241009;
+    --surface: #34181A;
+    --surface-soft: #3D1E1D;
+    --ink: #F3E7D8;
+    --ink-soft: #C9AF97;
+    --ink-faint: #8C7358;
+    --accent: #E3B463;
+    --accent-deep: #F3CE8E;
+    --accent-tint: #3A2E17;
+    --gold: #E3B463;
+    --gold-deep: #C99A3E;
+    --gold-tint: #3A2E17;
+    --on-accent: #2B1710;
+    --line: #43231F;
     --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
 
-    --cat-manikir: #E38AA6;
-    --cat-manikir-tint: #3A2530;
-    --cat-pedikir: #7FC1A8;
-    --cat-pedikir-tint: #223129;
-    --cat-oba: #E0AD6B;
-    --cat-oba-tint: #372A1C;
-    --cat-ostalo: #B6A6D1;
-    --cat-ostalo-tint: #2A2436;
+    --cat-izlivanje: #E6899D;
+    --cat-izlivanje-tint: #3A1A22;
+    --cat-korekcija: #E79483;
+    --cat-korekcija-tint: #3D211B;
+    --cat-gel: #E8BE6E;
+    --cat-gel-tint: #3A2E17;
+    --cat-trajni: #D2A85C;
+    --cat-trajni-tint: #332912;
+    --cat-skidanje: #C7B79C;
+    --cat-skidanje-tint: #332C22;
+    --warn: #D2A85C;
+    --warn-tint: #332912;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #1C1317;
-  --surface: #271A1F;
-  --surface-soft: #2E1F25;
-  --ink: #F5E8EA;
-  --ink-soft: #C7ADB4;
-  --ink-faint: #8A6E75;
-  --accent: #E38AA6;
-  --accent-deep: #F3B9C9;
-  --accent-tint: #3A2530;
-  --line: #3D2A31;
+  --bg: #241009;
+  --surface: #34181A;
+  --surface-soft: #3D1E1D;
+  --ink: #F3E7D8;
+  --ink-soft: #C9AF97;
+  --ink-faint: #8C7358;
+  --accent: #E3B463;
+  --accent-deep: #F3CE8E;
+  --accent-tint: #3A2E17;
+  --gold: #E3B463;
+  --gold-deep: #C99A3E;
+  --gold-tint: #3A2E17;
+  --on-accent: #2B1710;
+  --line: #43231F;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
 
-  --cat-manikir: #E38AA6;
-  --cat-manikir-tint: #3A2530;
-  --cat-pedikir: #7FC1A8;
-  --cat-pedikir-tint: #223129;
-  --cat-oba: #E0AD6B;
-  --cat-oba-tint: #372A1C;
-  --cat-ostalo: #B6A6D1;
-  --cat-ostalo-tint: #2A2436;
+  --cat-izlivanje: #E6899D;
+  --cat-izlivanje-tint: #3A1A22;
+  --cat-korekcija: #E79483;
+  --cat-korekcija-tint: #3D211B;
+  --cat-gel: #E8BE6E;
+  --cat-gel-tint: #3A2E17;
+  --cat-trajni: #D2A85C;
+  --cat-trajni-tint: #332912;
+  --cat-skidanje: #C7B79C;
+  --cat-skidanje-tint: #332C22;
 }
 
 * { box-sizing: border-box; }
@@ -273,7 +295,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:fo
 
 .day-pill.is-selected .day-pill__num {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border-color: var(--accent);
 }
 
@@ -398,6 +420,15 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:fo
   margin-top: 1px;
 }
 
+.appt-card__contact {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
 .appt-card__badge {
   display: inline-block;
   font-size: 0.68rem;
@@ -408,20 +439,6 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:fo
   color: var(--cat-color, var(--accent-deep));
   margin-top: 5px;
 }
-
-.appt-card__call {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--cat-tint, var(--accent-tint));
-  color: var(--cat-color, var(--accent-deep));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.appt-card__call:active { transform: scale(0.92); }
 
 .empty-state {
   text-align: center;
@@ -453,8 +470,8 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:fo
   height: 58px;
   border-radius: 50%;
   background: var(--accent);
-  color: #fff;
-  box-shadow: 0 10px 22px rgba(184, 74, 106, 0.4);
+  color: var(--on-accent);
+  box-shadow: 0 10px 22px rgba(74, 13, 24, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -597,12 +614,12 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:fo
 .chip.is-active {
   border-color: transparent;
   background: var(--cat-color, var(--accent));
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .overlap-warning {
-  background: var(--cat-oba-tint);
-  color: var(--cat-oba);
+  background: var(--warn-tint);
+  color: var(--warn);
   border-radius: var(--radius-sm);
   padding: 10px 12px;
   font-size: 0.82rem;
@@ -626,7 +643,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:fo
 
 .btn-primary {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .btn-primary:active { background: var(--accent-deep); }
@@ -709,3 +726,156 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:fo
 @media (prefers-reduced-motion: reduce) {
   .overlay, .sheet, .toast, .view-toggle button { transition: none !important; }
 }
+
+/* ---------- Brand logo ---------- */
+
+.brand-mark {
+  height: 30px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+.menu-brand {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 14px;
+}
+
+.menu-brand img {
+  height: 56px;
+  width: auto;
+}
+
+/* ---------- Materijal (inventory checklist) ---------- */
+
+.sheet--material {
+  max-height: 88vh;
+  max-height: 88dvh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+}
+
+.material-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 10px;
+  margin: 0 -6px;
+}
+
+.material-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 6px;
+  border-radius: 12px;
+}
+
+.material-checkbox {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+}
+
+.material-row.is-needed .material-checkbox {
+  border-color: var(--accent);
+}
+
+.material-row.is-bought .material-checkbox {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--on-accent);
+}
+
+.material-name {
+  flex: 1;
+  font-size: 0.96rem;
+  font-weight: 600;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.material-row.is-needed .material-name {
+  color: var(--ink);
+}
+
+.material-row.is-bought .material-name {
+  color: var(--ink-faint);
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.material-status {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.material-row.is-needed .material-status {
+  background: var(--accent-tint);
+  color: var(--accent);
+}
+
+.material-row.is-bought .material-status {
+  background: var(--surface-soft);
+  color: var(--ink-faint);
+}
+
+.material-delete {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+}
+
+.material-delete:active { background: var(--surface-soft); }
+
+.material-addbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 0 calc(16px + var(--safe-bottom));
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.material-addbar input {
+  flex: 1;
+  padding: 12px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 0.95rem;
+}
+
+.material-addbtn {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.material-addbtn:active { background: var(--accent-deep); }

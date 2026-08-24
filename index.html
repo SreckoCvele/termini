@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
 <title>Termini</title>
 <meta name="description" content="Kalendar termina za manikir i pedikir">
-<meta name="theme-color" content="#B84A6A">
+<meta name="theme-color" content="#7A1F2F">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,6 +21,7 @@
     <header class="app-header">
       <div class="app-header__top">
         <div class="app-header__title">
+          <img class="brand-mark" src="icons/logo-mark-sm.png" alt="dži vibe studio">
           <h1 class="app-header__month" id="headerMonth">Avgust</h1>
           <span class="app-header__year" id="headerYear">2026</span>
         </div>
@@ -71,9 +72,9 @@
       </div>
 
       <div class="field">
-        <label for="fContact">Kontakt telefon</label>
-        <input type="tel" id="fContact" placeholder="npr. 065 123 4567" autocomplete="off">
-        <div class="field-error" id="errContact" hidden>Unesi broj telefona.</div>
+        <label for="fContact">Kontakt</label>
+        <input type="text" id="fContact" placeholder="npr. 065 123 4567 ili Instagram: primjerx123" autocomplete="off">
+        <div class="field-error" id="errContact" hidden>Unesi kontakt (telefon, Instagram...).</div>
       </div>
 
       <div class="field">
@@ -96,10 +97,11 @@
       <div class="field">
         <label>Vrsta usluge</label>
         <div class="chip-row" id="categoryChips">
-          <button type="button" class="chip" data-cat="manikir">Manikir</button>
-          <button type="button" class="chip" data-cat="pedikir">Pedikir</button>
-          <button type="button" class="chip" data-cat="oba">Manikir i pedikir</button>
-          <button type="button" class="chip" data-cat="ostalo">Ostalo</button>
+          <button type="button" class="chip" data-cat="izlivanje">Izlivanje</button>
+          <button type="button" class="chip" data-cat="korekcija">Korekcija</button>
+          <button type="button" class="chip" data-cat="gel">Gel na prirodne</button>
+          <button type="button" class="chip" data-cat="trajni">Trajni lak</button>
+          <button type="button" class="chip" data-cat="skidanje">Skidanje</button>
         </div>
       </div>
 
@@ -126,6 +128,7 @@
 <div class="overlay" id="menuOverlay">
   <div class="sheet sheet--small" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
     <div class="sheet__handle"></div>
+    <div class="menu-brand"><img src="icons/logo-full-sm.png" alt="dži vibe studio"></div>
     <div class="sheet__head">
       <h2 class="sheet__title" id="menuTitle">Meni</h2>
       <button class="icon-btn" id="menuCloseBtn" aria-label="Zatvori">
@@ -133,6 +136,10 @@
       </button>
     </div>
     <div class="menu-list">
+      <button type="button" class="menu-item" id="materialBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 3h6l1 3h3v2H5V6h3l1-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 8l1 12.5a1.5 1.5 0 0 0 1.5 1.5h7a1.5 1.5 0 0 0 1.5-1.5L18 8" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        Materijal
+      </button>
       <button type="button" class="menu-item" id="goTodayBtn">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         Idi na danas
@@ -147,6 +154,25 @@
       </button>
       <input type="file" id="importFile" accept="application/json" class="visually-hidden">
     </div>
+  </div>
+</div>
+
+<div class="overlay" id="materialOverlay">
+  <div class="sheet sheet--material" role="dialog" aria-modal="true" aria-labelledby="materialTitle">
+    <div class="sheet__handle"></div>
+    <div class="sheet__head">
+      <h2 class="sheet__title" id="materialTitle">Materijal</h2>
+      <button class="icon-btn" id="materialCloseBtn" aria-label="Zatvori">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="material-list" id="materialList"></div>
+    <form class="material-addbar" id="materialForm">
+      <input type="text" id="fMaterialName" placeholder="npr. Turpije" autocomplete="off">
+      <button type="submit" class="material-addbtn" aria-label="Dodaj stavku">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </button>
+    </form>
   </div>
 </div>
 

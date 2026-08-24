@@ -2,12 +2,13 @@
   'use strict';
 
   var STORAGE_KEY = 'salon-termini:v1';
+  var MATERIAL_KEY = 'salon-materijal:v1';
 
   var MONTHS = ['Januar', 'Februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar'];
   var DOW_SHORT = ['Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub', 'Ned'];
   var DOW_FULL = ['Ponedeljak', 'Utorak', 'Sreda', 'Četvrtak', 'Petak', 'Subota', 'Nedelja'];
 
-  var CATEGORY_LABEL = { manikir: 'Manikir', pedikir: 'Pedikir', oba: 'Manikir i pedikir', ostalo: 'Ostalo' };
+  var CATEGORY_LABEL = { izlivanje: 'Izlivanje', korekcija: 'Korekcija', gel: 'Gel na prirodne', trajni: 'Trajni lak', skidanje: 'Skidanje' };
 
   function pad2(n) { return n < 10 ? '0' + n : '' + n; }
 
@@ -53,9 +54,9 @@
     });
   }
 
-  function loadAppointments() {
+  function loadList(key) {
     try {
-      var raw = localStorage.getItem(STORAGE_KEY);
+      var raw = localStorage.getItem(key);
       if (!raw) return [];
       var parsed = JSON.parse(raw);
       return Array.isArray(parsed) ? parsed : [];
@@ -68,12 +69,17 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
   }
 
+  function saveMaterials(list) {
+    localStorage.setItem(MATERIAL_KEY, JSON.stringify(list));
+  }
+
   var state = {
-    appointments: loadAppointments(),
+    appointments: loadList(STORAGE_KEY),
+    materials: loadList(MATERIAL_KEY),
     viewMode: 'day',
     selectedDate: new Date(),
     editingId: null,
-    activeCategory: 'manikir'
+    activeCategory: 'izlivanje'
   };
 
   var today = new Date();
@@ -111,10 +117,17 @@
 
     menuOverlay: document.getElementById('menuOverlay'),
     menuCloseBtn: document.getElementById('menuCloseBtn'),
+    materialBtn: document.getElementById('materialBtn'),
     goTodayBtn: document.getElementById('goTodayBtn'),
     exportBtn: document.getElementById('exportBtn'),
     importBtn: document.getElementById('importBtn'),
     importFile: document.getElementById('importFile'),
+
+    materialOverlay: document.getElementById('materialOverlay'),
+    materialCloseBtn: document.getElementById('materialCloseBtn'),
+    materialList: document.getElementById('materialList'),
+    materialForm: document.getElementById('materialForm'),
+    fMaterialName: document.getElementById('fMaterialName'),
 
     confirmOverlay: document.getElementById('confirmOverlay'),
     confirmText: document.getElementById('confirmText'),
@@ -184,18 +197,18 @@
 
   function categoryVars(cat) {
     var map = {
-      manikir: ['--cat-manikir', '--cat-manikir-tint'],
-      pedikir: ['--cat-pedikir', '--cat-pedikir-tint'],
-      oba: ['--cat-oba', '--cat-oba-tint'],
-      ostalo: ['--cat-ostalo', '--cat-ostalo-tint']
+      izlivanje: ['--cat-izlivanje', '--cat-izlivanje-tint'],
+      korekcija: ['--cat-korekcija', '--cat-korekcija-tint'],
+      gel: ['--cat-gel', '--cat-gel-tint'],
+      trajni: ['--cat-trajni', '--cat-trajni-tint'],
+      skidanje: ['--cat-skidanje', '--cat-skidanje-tint']
     };
-    return map[cat] || map.ostalo;
+    return map[cat] || map.skidanje;
   }
 
   function apptCardHTML(a) {
     var vars = categoryVars(a.category);
     var style = '--cat-color: var(' + vars[0] + '); --cat-tint: var(' + vars[1] + ');';
-    var telHref = 'tel:' + String(a.contact).replace(/[^0-9+]/g, '');
     return (
       '<div class="appt-card" style="' + style + '" data-id="' + a.id + '">' +
         '<div class="appt-card__time">' +
@@ -205,11 +218,9 @@
         '<div class="appt-card__body" data-open-edit="' + a.id + '">' +
           '<div class="appt-card__client">' + escapeHtml(a.client) + '</div>' +
           '<div class="appt-card__service">' + escapeHtml(a.service || '') + '</div>' +
+          '<div class="appt-card__contact">' + escapeHtml(a.contact || '') + '</div>' +
           '<span class="appt-card__badge">' + CATEGORY_LABEL[a.category] + '</span>' +
         '</div>' +
-        '<a class="appt-card__call" href="' + telHref + '" aria-label="Pozovi ' + escapeHtml(a.client) + '" onclick="event.stopPropagation()">' +
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.2c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2 2.2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>' +
-        '</a>' +
       '</div>'
     );
   }
@@ -326,7 +337,7 @@
     el.fTo.value = '11:00';
     el.fService.value = '';
     el.fNote.value = '';
-    setActiveCategory('manikir');
+    setActiveCategory('izlivanje');
     openOverlay(el.formOverlay);
     setTimeout(function () { el.fClient.focus(); }, 50);
   }
@@ -345,7 +356,7 @@
     el.fTo.value = a.to;
     el.fService.value = a.service || '';
     el.fNote.value = a.note || '';
-    setActiveCategory(a.category || 'ostalo');
+    setActiveCategory(a.category || 'izlivanje');
     openOverlay(el.formOverlay);
   }
 
@@ -450,6 +461,13 @@
   el.menuCloseBtn.addEventListener('click', function () { closeOverlay(el.menuOverlay); });
   el.menuOverlay.addEventListener('click', function (e) { if (e.target === el.menuOverlay) closeOverlay(el.menuOverlay); });
 
+  el.materialBtn.addEventListener('click', function () {
+    closeOverlay(el.menuOverlay);
+    openOverlay(el.materialOverlay);
+    renderMaterialList();
+    setTimeout(function () { el.fMaterialName.focus(); }, 300);
+  });
+
   el.goTodayBtn.addEventListener('click', function () {
     state.selectedDate = new Date(today);
     closeOverlay(el.menuOverlay);
@@ -492,6 +510,73 @@
       el.importFile.value = '';
     };
     reader.readAsText(file);
+  });
+
+  /* ---------- Materijal (inventory checklist) ---------- */
+
+  function materialRowHTML(item) {
+    var statusClass = item.purchased ? 'is-bought' : 'is-needed';
+    var statusLabel = item.purchased ? 'Kupljeno' : 'Nedostaje';
+    var check = item.purchased
+      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4 10-10" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      : '';
+    return (
+      '<div class="material-row ' + statusClass + '" data-id="' + item.id + '">' +
+        '<button type="button" class="material-checkbox" data-toggle="' + item.id + '" aria-label="Označi kupljeno">' + check + '</button>' +
+        '<span class="material-name">' + escapeHtml(item.name) + '</span>' +
+        '<span class="material-status">' + statusLabel + '</span>' +
+        '<button type="button" class="material-delete" data-remove="' + item.id + '" aria-label="Ukloni stavku">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
+        '</button>' +
+      '</div>'
+    );
+  }
+
+  function renderMaterialList() {
+    if (state.materials.length === 0) {
+      el.materialList.innerHTML = '<div class="empty-state"><div class="empty-state__title">Lista je prazna</div><div>Dodaj prvu stavku ispod (npr. Turpije).</div></div>';
+      return;
+    }
+    var sorted = state.materials.slice().sort(function (a, b) {
+      if (a.purchased === b.purchased) return 0;
+      return a.purchased ? 1 : -1;
+    });
+    el.materialList.innerHTML = sorted.map(materialRowHTML).join('');
+
+    el.materialList.querySelectorAll('[data-toggle]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-toggle');
+        var item = state.materials.find(function (m) { return m.id === id; });
+        if (item) {
+          item.purchased = !item.purchased;
+          saveMaterials(state.materials);
+          renderMaterialList();
+        }
+      });
+    });
+
+    el.materialList.querySelectorAll('[data-remove]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-remove');
+        state.materials = state.materials.filter(function (m) { return m.id !== id; });
+        saveMaterials(state.materials);
+        renderMaterialList();
+      });
+    });
+  }
+
+  el.materialCloseBtn.addEventListener('click', function () { closeOverlay(el.materialOverlay); });
+  el.materialOverlay.addEventListener('click', function (e) { if (e.target === el.materialOverlay) closeOverlay(el.materialOverlay); });
+
+  el.materialForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = el.fMaterialName.value.trim();
+    if (!name) return;
+    state.materials.push({ id: uid(), name: name, purchased: false });
+    saveMaterials(state.materials);
+    el.fMaterialName.value = '';
+    renderMaterialList();
+    el.fMaterialName.focus();
   });
 
   /* ---------- Service worker ---------- */

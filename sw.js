@@ -1,4 +1,4 @@
-const CACHE_NAME = 'termini-cache-v1';
+const CACHE_NAME = 'termini-cache-v2';
 const APP_SHELL = [
   './',
   './index.html',
@@ -8,7 +8,9 @@ const APP_SHELL = [
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-512-maskable.png',
-  './icons/apple-touch-icon.png'
+  './icons/apple-touch-icon.png',
+  './icons/logo-mark-sm.png',
+  './icons/logo-full-sm.png'
 ];
 
 self.addEventListener('install', (event) => {
