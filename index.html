@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Termini</title>
+<meta name="description" content="Kalendar termina za manikir i pedikir">
+<meta name="theme-color" content="#B84A6A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Termini">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell-anchor">
+  <div class="app" id="app">
+    <header class="app-header">
+      <div class="app-header__top">
+        <div class="app-header__title">
+          <h1 class="app-header__month" id="headerMonth">Avgust</h1>
+          <span class="app-header__year" id="headerYear">2026</span>
+        </div>
+        <button class="icon-btn" id="menuBtn" aria-label="Meni">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="12" cy="19" r="1.8" fill="currentColor"/></svg>
+        </button>
+      </div>
+
+      <div class="view-toggle" role="tablist">
+        <button type="button" id="viewDayBtn" role="tab" aria-selected="true">Dan</button>
+        <button type="button" id="viewWeekBtn" role="tab" aria-selected="false">Sedmica</button>
+      </div>
+
+      <div class="week-strip">
+        <button class="week-strip__nav" id="prevWeekBtn" aria-label="Prethodna sedmica">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="week-strip__days" id="weekStripDays"></div>
+        <button class="week-strip__nav" id="nextWeekBtn" aria-label="Sledeća sedmica">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-main" id="appMain"></main>
+  </div>
+
+  <button class="fab" id="addBtn" aria-label="Dodaj termin">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<div class="overlay" id="formOverlay">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+    <div class="sheet__handle"></div>
+    <div class="sheet__head">
+      <h2 class="sheet__title" id="formTitle">Novi termin</h2>
+      <button class="icon-btn" id="formCloseBtn" aria-label="Zatvori">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <form id="apptForm" novalidate>
+      <div class="field">
+        <label for="fClient">Ime klijenta</label>
+        <input type="text" id="fClient" placeholder="npr. Ana Perić" autocomplete="off">
+        <div class="field-error" id="errClient" hidden>Unesi ime klijenta.</div>
+      </div>
+
+      <div class="field">
+        <label for="fContact">Kontakt telefon</label>
+        <input type="tel" id="fContact" placeholder="npr. 065 123 4567" autocomplete="off">
+        <div class="field-error" id="errContact" hidden>Unesi broj telefona.</div>
+      </div>
+
+      <div class="field">
+        <label for="fDate">Datum</label>
+        <input type="date" id="fDate">
+      </div>
+
+      <div class="field field-row">
+        <div>
+          <label for="fFrom">Od</label>
+          <input type="time" id="fFrom">
+        </div>
+        <div>
+          <label for="fTo">Do</label>
+          <input type="time" id="fTo">
+        </div>
+      </div>
+      <div class="field-error" id="errTime" hidden>Vreme "do" mora biti posle vremena "od".</div>
+
+      <div class="field">
+        <label>Vrsta usluge</label>
+        <div class="chip-row" id="categoryChips">
+          <button type="button" class="chip" data-cat="manikir">Manikir</button>
+          <button type="button" class="chip" data-cat="pedikir">Pedikir</button>
+          <button type="button" class="chip" data-cat="oba">Manikir i pedikir</button>
+          <button type="button" class="chip" data-cat="ostalo">Ostalo</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fService">Šta radi</label>
+        <input type="text" id="fService" placeholder="npr. Gel lak, francuski manikir">
+      </div>
+
+      <div class="field">
+        <label for="fNote">Napomena (opciono)</label>
+        <textarea id="fNote" placeholder="npr. alergija na aceton, stalna mušterija..."></textarea>
+      </div>
+
+      <div class="overlap-warning" id="overlapWarning" hidden></div>
+
+      <div class="sheet__actions">
+        <button type="button" class="btn btn-danger" id="deleteBtn" hidden>Obriši</button>
+        <button type="submit" class="btn btn-primary">Sačuvaj</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="menuOverlay">
+  <div class="sheet sheet--small" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
+    <div class="sheet__handle"></div>
+    <div class="sheet__head">
+      <h2 class="sheet__title" id="menuTitle">Meni</h2>
+      <button class="icon-btn" id="menuCloseBtn" aria-label="Zatvori">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="menu-list">
+      <button type="button" class="menu-item" id="goTodayBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Idi na danas
+      </button>
+      <button type="button" class="menu-item" id="exportBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Izvezi rezervu
+      </button>
+      <button type="button" class="menu-item" id="importBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 15V3m0 0l-4 4m4-4l4 4M5 21h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Uvezi rezervu
+      </button>
+      <input type="file" id="importFile" accept="application/json" class="visually-hidden">
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="confirmOverlay">
+  <div class="sheet sheet--small" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="sheet__handle"></div>
+    <h2 class="sheet__title" id="confirmTitle" style="margin-bottom:10px;">Obrisati termin?</h2>
+    <p class="confirm-text" id="confirmText">Ova radnja se ne može poništiti.</p>
+    <div class="sheet__actions">
+      <button type="button" class="btn btn-secondary" id="confirmCancelBtn">Otkaži</button>
+      <button type="button" class="btn btn-primary" id="confirmOkBtn" style="background:var(--accent-deep);">Obriši</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
